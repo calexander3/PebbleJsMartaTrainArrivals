@@ -1,5 +1,12 @@
 var UI = require('ui');
 
+var distanceThreashold = 1.8;
+var locationOptions = {
+  enableHighAccuracy: true, 
+  maximumAge: 10000, 
+  timeout: 3000
+};
+
 var stations = [
   {name: "Airport", apiKey: "airport", lat: "33.640758", lon: "-84.446341" },
   {name: "Arts Center", apiKey: "arts%20center", lat: "33.789705", lon: "-84.387789" },
@@ -64,44 +71,40 @@ var calcDistanceKilometers = function(lat1, lon1, lat2, lon2){
      lon1 === undefined || lon1 === null ||
      lon2 === undefined || lon2 === null)
   {
-    return 0;
+    return -1;
   }
   
-  var φ1 = radions(lat1), φ2 = radions(lat2), Δλ = radions((lon2-lon1)), R = 6371000; // gives d in metres
+  var φ1 = radions(lat1), φ2 = radions(lat2), Δλ = radions((lon2-lon1)), R = 6371000;
   var d = Math.acos( Math.sin(φ1)*Math.sin(φ2) + Math.cos(φ1)*Math.cos(φ2) * Math.cos(Δλ) ) * R;
   return Math.abs(d/1000) * 0.62137;
-  //return Math.abs(Math.sqrt(Math.pow((lat1-lat2),2)+Math.pow((lon1-lon2),2)) / 1000);
 };
 
 var buildMenu = function(lat, lon){
   var newItems = [];
   for(var i = 0; i < stations.length; i ++){
-    var dist = calcDistanceKilometers(lat, lon, stations[i].lat, stations[i].lon);
-    console.log(stations[i].name + ': ' + dist);
-    if(dist < 2){
+    var distance = calcDistanceKilometers(lat, lon, stations[i].lat, stations[i].lon);
+    console.log(stations[i].name + ': ' + distance);
+    if(distance < distanceThreashold){
       newItems.push({
-        title: stations[i].name + ' (' + dist.toFixed(1) + ' m)',
-        stationValue: stations[i].apiKey
+        title: stations[i].name + ((distance > -1) ? (' (' + distance.toFixed(1) + ' m)') : ''),
+        stationName: stations[i].name,
+        stationValue: stations[i].apiKey,
+        stationDistance: distance,
       });
     }   
   }
-  menu.items(0, newItems);
-  
+  if(lat !== null && lon !== null){
+    menu.items(0, newItems.sort(function(a,b){return (a.stationDistance - b.stationDistance);}));
+  }
+  else{
+    menu.items(0, newItems);
+  }
 };
-
-
-var locationOptions = {
-  enableHighAccuracy: true, 
-  maximumAge: 10000, 
-  timeout: 10000
-};
-
-navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locationOptions);
 
 function locationSuccess(pos) {
   console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
-  buildMenu(pos.coords.latitude,pos.coords.longitude);
-  //buildMenu(33.776827,-84.259188);
+  //buildMenu(pos.coords.latitude,pos.coords.longitude);
+  buildMenu(33.776827,-84.259188);
 }
 
 function locationError(err) {
@@ -109,7 +112,7 @@ function locationError(err) {
   buildMenu(null,null);
 }
 
-
+navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locationOptions);
 
 module.exports = {
   menu: menu,

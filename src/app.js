@@ -24,9 +24,8 @@ var getTrainData = function(){
 };
 
 menuBuilder.menu.on('select', function(e) { 
-  stationWindowBuilder.setTitle(e.item.title);
+  stationWindowBuilder.setTitle(e.item.stationName);
   currentStation = e.item.stationValue; 
-  //getTrainData();
   stationWindowBuilder.stationWindow.show();
   runner = setInterval(getTrainData(), 30000);
 });
