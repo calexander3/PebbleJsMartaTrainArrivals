@@ -1,9 +1,9 @@
 {
     "appKeys": {},
     "capabilities": [
-        ""
+        "location"
     ],
-    "companyName": "craig.d.alexander@gmail.com",
+    "companyName": "Damage.io",
     "longName": "Marta Next Train",
     "projectType": "pebblejs",
     "resources": {

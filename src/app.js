@@ -1,6 +1,6 @@
-var UI = require('ui');
 var ajax = require('ajax');
 var stationWindowBuilder = require('stationWindowBuilder');
+var menuBuilder = require('menuBuilder');
 
 var currentStation = '';
 var runner = null;
@@ -23,27 +23,7 @@ var getTrainData = function(){
   }
 };
 
-var menu = new UI.Menu({
-  backgroundColor: 'black',
-  textColor: 'white',
-  highlightBackgroundColor: 'black',
-  highlightTextColor: 'yellow',
-  sections: [{
-    title: 'Marta',
-    items: [{
-      title: 'Avondale',
-      stationValue: 'avondale'
-    }, {
-      title: 'Five Points',
-      stationValue: 'five%20points'
-    }, {
-      title: 'North Avenue',
-      stationValue: 'North%20Avenue'
-    }]
-  }]
-});
-
-menu.on('select', function(e) { 
+menuBuilder.menu.on('select', function(e) { 
   stationWindowBuilder.setTitle(e.item.title);
   currentStation = e.item.stationValue; 
   //getTrainData();
@@ -59,5 +39,5 @@ stationWindowBuilder.stationWindow.on('hide', function() {
   }
 });
 
-menu.show();
+menuBuilder.menu.show();
 
