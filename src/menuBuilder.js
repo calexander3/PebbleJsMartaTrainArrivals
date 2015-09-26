@@ -55,8 +55,8 @@ var menu = new UI.Menu({
   highlightBackgroundColor: 'black',
   highlightTextColor: 'yellow',*/
   sections: [{
-    title: 'Marta Stations',
-  items: []
+    title: 'Fetching Location...',
+    items: [{title:' '}]
   }]
 });
 
@@ -93,12 +93,18 @@ var buildMenu = function(lat, lon){
       });
     }   
   }
+  
+  var newSection = {
+    title: 'Marta Staions',
+  };
+  
   if(lat !== null && lon !== null){
-    menu.items(0, newItems.sort(function(a,b){return (a.stationDistance - b.stationDistance);}));
+    newSection.items = newItems.sort(function(a,b){return (a.stationDistance - b.stationDistance);});
   }
   else{
-    menu.items(0, newItems);
+    newSection.items = newItems;
   }
+  menu.section(0,newSection);
 };
 
 function locationSuccess(pos) {
