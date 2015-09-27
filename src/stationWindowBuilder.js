@@ -49,9 +49,10 @@ var shortenString = function(str){
 var loadData = function(trainData){
   clearDataElements();
   var rowPosition = 0;
+  var rowSize = 25;
   for(var i = 0; i < trainData.length; i ++){
     
-    rowPosition = ((i + 1) * 25);
+    rowPosition = ((i + 1) * rowSize);
     var waitTime = trainData[i].WAITING_TIME + ((isNaN(trainData[i].WAITING_TIME)) ? '' : ' Min');
     
     var trainLineText = new UI.Text({
@@ -85,8 +86,18 @@ var loadData = function(trainData){
       textOverflow: 'ellipsis',
     });
     stationWindow.add(waitingText);
-    
   }
+  
+  var lastUpdatedText = new UI.Text({
+      position: new Vector2(0, rowPosition + rowSize + 2),
+      size: new Vector2(144, 15),
+      font: 'gothic-14',
+      color: 'white',
+      text: 'Last Updated ' + (new Date()).toLocaleTimeString(),
+      textAlign: 'right',
+      textOverflow: 'ellipsis',
+    });
+    stationWindow.add(lastUpdatedText);
 };
 
 module.exports = {

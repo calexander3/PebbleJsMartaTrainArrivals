@@ -4,7 +4,7 @@ var menuBuilder = require('menuBuilder');
 var Light = require('ui/light');
 
 var currentStation = '';
-var runner = null;
+//var runner = null;
 
 var getTrainData = function(){
   if(currentStation.length > 0){
@@ -28,7 +28,8 @@ menuBuilder.menu.on('select', function(e) {
   stationWindowBuilder.setTitle(e.item.stationName);
   currentStation = e.item.stationValue; 
   stationWindowBuilder.stationWindow.show();
-  runner = setInterval(getTrainData(), 30000);
+  getTrainData();
+  //runner = setInterval(getTrainData(), 30000);
 });
 
 menuBuilder.menu.on('up', function(e) { 
@@ -40,11 +41,12 @@ menuBuilder.menu.on('down', function(e) {
 });
 
 stationWindowBuilder.stationWindow.on('click', getTrainData);
+stationWindowBuilder.stationWindow.on('accelTap', getTrainData);
 
 stationWindowBuilder.stationWindow.on('hide', function() {
-  if(runner !== null){
+  /*if(runner !== null){
     clearInterval(runner);
-  }
+  }*/
 });
 
 Light.on();

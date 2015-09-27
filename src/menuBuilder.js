@@ -100,7 +100,6 @@ var buildMenu = function(lat, lon){
 };
 
 function locationSuccess(pos) {
-  console.log('lat= ' + pos.coords.latitude + ' lon= ' + pos.coords.longitude);
   buildMenu(pos.coords.latitude,pos.coords.longitude);
   //buildMenu(33.776827,-84.259188);
 }
