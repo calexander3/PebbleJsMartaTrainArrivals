@@ -43,7 +43,7 @@ var getColor = function(color){
 };
 
 var shortenString = function(str){
-  return str.replace('Hamilton', 'H').replace('Boarding', 'Brding').replace('Arriving', 'Arriv');
+  return str.replace('Hamilton', 'H').replace('Boarding', 'Brding').replace('Arriving', 'Arriv').replace('Creek', 'Crk').replace('Memorial','M');
 };
 
 var loadData = function(trainData){
@@ -51,12 +51,12 @@ var loadData = function(trainData){
   var rowPosition = 0;
   for(var i = 0; i < trainData.length; i ++){
     
-    rowPosition = ((i + 1) * 22) + 5;
+    rowPosition = ((i + 1) * 25);
     var waitTime = trainData[i].WAITING_TIME + ((isNaN(trainData[i].WAITING_TIME)) ? '' : ' Min');
     
     var trainLineText = new UI.Text({
       position: new Vector2(5, rowPosition),
-      size: new Vector2(15, 20),
+      size: new Vector2(15, 25),
       font: 'gothic-24-bold',
       color: getColor(trainData[i].ROUTE.toLowerCase()),
       text: trainData[i].DIRECTION,
@@ -66,7 +66,7 @@ var loadData = function(trainData){
     
     var headingText = new UI.Text({
       position: new Vector2(20, rowPosition),
-      size: new Vector2(80, 20),
+      size: new Vector2(80, 25),
       font: 'gothic-24',
       color: 'white',
       text: shortenString(trainData[i].HEAD_SIGN),
@@ -77,7 +77,7 @@ var loadData = function(trainData){
     
       var waitingText = new UI.Text({
       position: new Vector2(100, rowPosition),
-      size: new Vector2(44, 20),
+      size: new Vector2(44, 25),
       font: 'gothic-24',
       color: 'white',
       text: shortenString(waitTime),

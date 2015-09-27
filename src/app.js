@@ -1,6 +1,7 @@
 var ajax = require('ajax');
 var stationWindowBuilder = require('stationWindowBuilder');
 var menuBuilder = require('menuBuilder');
+var Light = require('ui/light');
 
 var currentStation = '';
 var runner = null;
@@ -30,7 +31,15 @@ menuBuilder.menu.on('select', function(e) {
   runner = setInterval(getTrainData(), 30000);
 });
 
-stationWindowBuilder.stationWindow.on('click', 'select', getTrainData);
+menuBuilder.menu.on('up', function(e) { 
+  console.log('up');
+});
+
+menuBuilder.menu.on('down', function(e) { 
+  console.log('down');
+});
+
+stationWindowBuilder.stationWindow.on('click', getTrainData);
 
 stationWindowBuilder.stationWindow.on('hide', function() {
   if(runner !== null){
@@ -38,5 +47,6 @@ stationWindowBuilder.stationWindow.on('hide', function() {
   }
 });
 
+Light.on();
 menuBuilder.menu.show();
 
