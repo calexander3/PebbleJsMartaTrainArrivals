@@ -59,7 +59,7 @@ if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform === 'basalt
   menuOptions.backgroundColor = 'black';
   menuOptions.highlightBackgroundColor = 'black';
   menuOptions.textColor = 'white';
-  menuOptions.highlightTextColor = 'chromeYellow'
+  menuOptions.highlightTextColor = 'chromeYellow';
 }
 
 var menu = new UI.Menu(menuOptions);
