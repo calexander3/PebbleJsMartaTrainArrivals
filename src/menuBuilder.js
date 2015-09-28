@@ -47,13 +47,22 @@ var stations = [
   {name: "West Lake", apiKey: "west%20lake", lat: "33.75314", lon: "-84.44658" },
 ];
   
-  
-var menu = new UI.Menu({
+
+var menuOptions = {
   sections: [{
     title: 'Fetching Location...',
     items: [{title:' '}]
   }]
-});
+};
+
+if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform === 'basalt') { //Pebble Time
+  menuOptions.backgroundColor = 'black';
+  menuOptions.highlightBackgroundColor = 'black';
+  menuOptions.textColor = 'white';
+  menuOptions.highlightTextColor = 'chromeYellow'
+}
+
+var menu = new UI.Menu(menuOptions);
 
 var radions = function(number){
     return number * Math.PI / 180;
@@ -86,14 +95,13 @@ var buildMenu = function(lat, lon){
     }); 
   }
   
-  var newSection = {
-    title: 'Marta Staions',
-  };
-  
+  var newSection = {};
   if(lat !== null && lon !== null){
+    newSection.title = 'Closest Stations';
     newSection.items = newItems.sort(function(a,b){return (a.stationDistance - b.stationDistance);}).slice(0,5); //Return first five
   }
   else{
+    newSection.title = 'Marta Stations';
     newSection.items = newItems;
   }
   menu.section(0,newSection);

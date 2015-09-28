@@ -1,7 +1,7 @@
 var ajax = require('ajax');
 var stationWindowBuilder = require('stationWindowBuilder');
 var menuBuilder = require('menuBuilder');
-var Light = require('ui/light');
+var light = require('ui/light');
 
 var currentStation = '';
 //var runner = null;
@@ -43,12 +43,12 @@ menuBuilder.menu.on('down', function(e) {
 stationWindowBuilder.stationWindow.on('click', getTrainData);
 stationWindowBuilder.stationWindow.on('accelTap', getTrainData);
 
-stationWindowBuilder.stationWindow.on('hide', function() {
-  /*if(runner !== null){
+/*stationWindowBuilder.stationWindow.on('hide', function() {
+  if(runner !== null){
     clearInterval(runner);
-  }*/
-});
+  }
+});*/
 
-Light.on();
+light.on();
 menuBuilder.menu.show();
 

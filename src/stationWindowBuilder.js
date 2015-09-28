@@ -34,7 +34,7 @@ var clearDataElements = function(){
 var getColor = function(color){
   switch(color) {
     case 'blue':
-        return 'cyan';
+        return 'vividCerulean';
     case 'gold':
         return 'yellow';
     default:
