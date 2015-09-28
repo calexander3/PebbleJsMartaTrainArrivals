@@ -112,6 +112,10 @@ function locationSuccess(pos) {
   //buildMenu(33.776827,-84.259188);
 }
 
+menu.on('longSelect', function(){
+  buildMenu(null,null);
+});
+
 function locationError(err) {
   console.log('location error (' + err.code + '): ' + err.message);
   buildMenu(null,null);
@@ -122,5 +126,3 @@ navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locatio
 module.exports = {
   menu: menu,
 };
-
-

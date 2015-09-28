@@ -1,54 +1,28 @@
-var ajax = require('ajax');
-var stationWindowBuilder = require('stationWindowBuilder');
-var menuBuilder = require('menuBuilder');
-var light = require('ui/light');
+var stationWindowService = require('stationWindowService');
+var menuService = require('menuService');
+var martaService = require('martaService');
+var backLight = require('ui/light');
 
 var currentStation = '';
-//var runner = null;
+var runner = null;
 
-var getTrainData = function(){
-  if(currentStation.length > 0){
-    console.log('refreshing...');
-    ajax(
-      {
-        url: 'http://developer.itsmarta.com/NextTrainService/RestServiceNextTrain.svc/GetNextTrain/' + currentStation,
-        type: 'json'
-      },
-      function(data, status, request) {
-        stationWindowBuilder.loadData(data);
-      },
-      function(error, status, request) {
-        console.log('The ajax request failed: ' + error);
-      }
-    );
-  }
-};
-
-menuBuilder.menu.on('select', function(e) { 
-  stationWindowBuilder.setTitle(e.item.stationName);
+menuService.menu.on('select', function(e) { 
+  stationWindowService.setTitle(e.item.stationName);
   currentStation = e.item.stationValue; 
-  stationWindowBuilder.stationWindow.show();
-  getTrainData();
-  //runner = setInterval(getTrainData(), 30000);
+  stationWindowService.stationWindow.show();
+  martaService.getTrainData(currentStation,stationWindowService.loadData);
+  runner = setInterval(function(){martaService.getTrainData(currentStation,stationWindowService.loadData);}, 30000);
 });
 
-menuBuilder.menu.on('up', function(e) { 
-  console.log('up');
-});
+stationWindowService.stationWindow.on('click', function(){martaService.getTrainData(currentStation,stationWindowService.loadData);});
+stationWindowService.stationWindow.on('accelTap', function(){martaService.getTrainData(currentStation,stationWindowService.loadData);});
 
-menuBuilder.menu.on('down', function(e) { 
-  console.log('down');
-});
-
-stationWindowBuilder.stationWindow.on('click', getTrainData);
-stationWindowBuilder.stationWindow.on('accelTap', getTrainData);
-
-/*stationWindowBuilder.stationWindow.on('hide', function() {
+stationWindowService.stationWindow.on('hide', function() {
   if(runner !== null){
     clearInterval(runner);
   }
-});*/
+});
 
-light.on();
-menuBuilder.menu.show();
+backLight.on();
+menuService.menu.show();
 
