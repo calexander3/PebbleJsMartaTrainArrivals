@@ -1,6 +1,6 @@
 var ajax = require('ajax');
 
-var getTrainData = function(currentStation, callback){
+var getTrainData = function(currentStation, successCallback){
   if(currentStation.length > 0){
     console.log('refreshing...');
     ajax(
@@ -9,7 +9,7 @@ var getTrainData = function(currentStation, callback){
         type: 'json'
       },
       function(data, status, request) {
-        callback(data);
+        successCallback(data);
       },
       function(error, status, request) {
         console.log('The ajax request failed: ' + error);

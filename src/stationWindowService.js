@@ -46,7 +46,7 @@ var shortenString = function(str){
   return str.replace('Hamilton', 'H').replace('Boarding', 'Brding').replace('Arriving', 'Arriv').replace('Creek', 'Crk').replace('Memorial','M');
 };
 
-var loadData = function(trainData){
+var renderData = function(trainData){
   clearDataElements();
   var rowPosition = 0;
   var rowSize = 25;
@@ -102,6 +102,6 @@ var loadData = function(trainData){
 
 module.exports = {
   stationWindow: stationWindow,
-  loadData: loadData,
+  renderData: renderData,
   setTitle: setTitle,
 };
