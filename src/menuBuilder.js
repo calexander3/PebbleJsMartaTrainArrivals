@@ -57,9 +57,9 @@ var menuOptions = {
 
 if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform === 'basalt') { //Pebble Time
   menuOptions.backgroundColor = 'black';
-  menuOptions.highlightBackgroundColor = 'black';
+  menuOptions.highlightBackgroundColor = 'orange';
   menuOptions.textColor = 'white';
-  menuOptions.highlightTextColor = 'chromeYellow';
+  menuOptions.highlightTextColor = 'white';
 }
 
 var menu = new UI.Menu(menuOptions);
