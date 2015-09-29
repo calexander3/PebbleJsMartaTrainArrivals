@@ -10,6 +10,7 @@ menuService.menu.on('select', function(e) {
   stationWindowService.setTitle(e.item.stationName);
   currentStation = e.item.stationValue; 
   stationWindowService.stationWindow.show();
+  backLight.on();
   martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);
   runner = setInterval(function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);}, 30000);
 });
@@ -24,6 +25,5 @@ stationWindowService.stationWindow.on('hide', function() {
   }
 });
 
-backLight.on();
 menuService.menu.show();
 
