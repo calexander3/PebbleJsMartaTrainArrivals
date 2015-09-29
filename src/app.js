@@ -10,12 +10,12 @@ menuService.menu.on('select', function(e) {
   stationWindowService.setTitle(e.item.stationName);
   currentStation = e.item.stationValue; 
   stationWindowService.stationWindow.show();
-  martaService.getTrainData(currentStation,stationWindowService.renderData);
-  runner = setInterval(function(){martaService.getTrainData(currentStation,stationWindowService.renderData);}, 30000);
+  martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);
+  runner = setInterval(function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);}, 30000);
 });
 
-stationWindowService.stationWindow.on('click', function(){martaService.getTrainData(currentStation,stationWindowService.renderData);});
-stationWindowService.stationWindow.on('accelTap', function(){martaService.getTrainData(currentStation,stationWindowService.renderData);});
+stationWindowService.stationWindow.on('click', function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);});
+stationWindowService.stationWindow.on('accelTap', function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);});
 
 stationWindowService.stationWindow.on('hide', function() {
   backLight.auto();

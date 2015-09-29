@@ -100,8 +100,23 @@ var renderData = function(trainData){
     stationWindow.add(lastUpdatedText);
 };
 
+var renderError = function(error, status){
+  clearDataElements();
+  var errorText = new UI.Text({
+    position: new Vector2(5, 27),
+    size: new Vector2(134, 120),
+    font: 'gothic-24',
+    color: 'white',
+    textAlign: 'left',
+    textOverflow: 'wrap',
+    text: 'A network error has occured: ' + status + ' ' + error
+  });
+  stationWindow.add(errorText);
+};
+
 module.exports = {
   stationWindow: stationWindow,
-  renderData: renderData,
   setTitle: setTitle,
+  renderData: renderData,
+  renderError: renderError
 };

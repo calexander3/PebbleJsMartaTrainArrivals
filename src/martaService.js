@@ -1,6 +1,6 @@
 var ajax = require('ajax');
 
-var getTrainData = function(currentStation, successCallback){
+var getTrainData = function(currentStation, successCallback, errorCallback){
   if(currentStation.length > 0){
     console.log('refreshing...');
     ajax(
@@ -9,10 +9,14 @@ var getTrainData = function(currentStation, successCallback){
         type: 'json'
       },
       function(data, status, request) {
-        successCallback(data);
+        if(successCallback !== undefined && successCallback !== null && typeof(successCallback) === "function"){
+          successCallback(data);
+        }
       },
       function(error, status, request) {
-        console.log('The ajax request failed: ' + error);
+        if(errorCallback !== undefined && errorCallback !== null && typeof(errorCallback) === "function"){
+          errorCallback(error, status);
+        }
       }
     );
   }
