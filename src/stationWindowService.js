@@ -43,7 +43,12 @@ var getColor = function(color){
 };
 
 var shortenString = function(str){
-  return str.replace('Hamilton', 'H').replace('Boarding', 'Brding').replace('Arriving', 'Arriv').replace('Creek', 'Crk').replace('Memorial','M');
+  return str.replace('Hamilton', 'H')
+            .replace('Boarding', 'Brding')
+            .replace('Arriving', 'Arriv')
+            .replace('Creek', 'Crk')
+            .replace('Memorial','M')
+            .replace('North', 'N');
 };
 
 var renderData = function(trainData){

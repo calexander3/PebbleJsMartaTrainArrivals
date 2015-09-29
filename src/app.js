@@ -6,21 +6,25 @@ var backLight = require('ui/light');
 var currentStation = '';
 var runner = null;
 
+var refreshData = function(){
+  martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);
+};
+
 menuService.menu.on('select', function(e) { 
   stationWindowService.setTitle(e.item.stationName);
   currentStation = e.item.stationValue; 
   stationWindowService.stationWindow.show();
   backLight.on();
-  martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);
-  runner = setInterval(function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);}, 30000);
+  refreshData();
+  runner = setInterval(refreshData, 30000);
 });
 
-stationWindowService.stationWindow.on('click', function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);});
-stationWindowService.stationWindow.on('accelTap', function(){martaService.getTrainData(currentStation,stationWindowService.renderData,stationWindowService.renderError);});
+stationWindowService.stationWindow.on('click', refreshData);
+//stationWindowService.stationWindow.on('accelTap', refreshData);
 
 stationWindowService.stationWindow.on('hide', function() {
   backLight.auto();
-  if(runner !== null){
+  if(runner){
     clearInterval(runner);
   }
 });

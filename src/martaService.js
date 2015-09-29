@@ -9,12 +9,12 @@ var getTrainData = function(currentStation, successCallback, errorCallback){
         type: 'json'
       },
       function(data, status, request) {
-        if(successCallback !== undefined && successCallback !== null && typeof(successCallback) === "function"){
+        if(successCallback && typeof(successCallback) === "function"){
           successCallback(data);
         }
       },
       function(error, status, request) {
-        if(errorCallback !== undefined && errorCallback !== null && typeof(errorCallback) === "function"){
+        if(errorCallback && typeof(errorCallback) === "function"){
           errorCallback(error, status);
         }
       }
