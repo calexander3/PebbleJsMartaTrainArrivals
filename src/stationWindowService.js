@@ -1,6 +1,8 @@
 var UI = require('ui');
 var Vector2 = require('vector2');
 
+var lastUpdatedText = null;
+
 var stationWindow = new UI.Window({
   scrollable: true
 });
@@ -93,9 +95,9 @@ var renderData = function(trainData){
     stationWindow.add(waitingText);
   }
   
-  var lastUpdatedText = new UI.Text({
+  lastUpdatedText = new UI.Text({
       position: new Vector2(0, rowPosition + rowSize + 2),
-      size: new Vector2(144, 15),
+      size: new Vector2(141, 15),
       font: 'gothic-14',
       color: 'white',
       text: 'Last Updated ' + (new Date()).toLocaleTimeString(),
@@ -106,17 +108,21 @@ var renderData = function(trainData){
 };
 
 var renderError = function(error, status){
-  clearDataElements();
-  var errorText = new UI.Text({
-    position: new Vector2(5, 27),
-    size: new Vector2(134, 120),
-    font: 'gothic-24',
-    color: 'white',
-    textAlign: 'left',
-    textOverflow: 'wrap',
-    text: 'A network error has occured: ' + status + ' ' + error
-  });
-  stationWindow.add(errorText);
+  if(lastUpdatedText && stationWindow.index(lastUpdatedText) > 1){
+    lastUpdatedText.text('Refresh Failed');
+  }
+  else if(!lastUpdatedText || stationWindow.index(lastUpdatedText) == -1){
+      lastUpdatedText = new UI.Text({
+      position: new Vector2(5, 27),
+      size: new Vector2(134, 120),
+      font: 'gothic-24',
+      color: 'white',
+      textAlign: 'left',
+      textOverflow: 'wrap',
+      text: 'Unable to contact Marta'
+    });
+  }
+  stationWindow.add(lastUpdatedText);
 };
 
 module.exports = {
