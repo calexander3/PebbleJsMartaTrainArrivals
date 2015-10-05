@@ -68,7 +68,7 @@ var radions = function(number){
     return number * Math.PI / 180;
 };
 
-var calcDistanceKilometers = function(lat1, lon1, lat2, lon2){
+var calcDistanceMiles = function(lat1, lon1, lat2, lon2){
   
   if(!lat1 || !lat1 ||
      !lat2 || !lat2 ||
@@ -86,7 +86,7 @@ var calcDistanceKilometers = function(lat1, lon1, lat2, lon2){
 var buildMenu = function(lat, lon){
   var newItems = [];
   for(var i = 0; i < stations.length; i ++){
-    var distance = calcDistanceKilometers(lat, lon, stations[i].lat, stations[i].lon);
+    var distance = calcDistanceMiles(lat, lon, stations[i].lat, stations[i].lon);
     newItems.push({
       title: ((stations[i].abr) ? stations[i].abr : stations[i].name) + ((distance > -1) ? (' (' + distance.toFixed((distance < 10) ? 1 : 0) + 'm)') : ''),
       stationName: stations[i].name,

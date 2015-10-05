@@ -1,7 +1,7 @@
 var ajax = require('ajax');
 
 var getTrainData = function(currentStation, successCallback, errorCallback){
-  if(currentStation.length > 0){
+  if(currentStation){
     console.log('refreshing...');
     ajax(
       {
