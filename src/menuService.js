@@ -1,4 +1,5 @@
 var UI = require('ui');
+var riderAlertService = require('riderAlertService');
 
 var locationOptions = {
   enableHighAccuracy: true, 
@@ -46,7 +47,8 @@ var stations = [
   {name: "West End", apiKey: "west%20end", lat: 33.73581, lon: -84.41296 },
   {name: "West Lake", apiKey: "west%20lake", lat: 33.75314, lon: -84.44658 },
 ];
-  
+
+var riderAlerts=[];
 
 var menuOptions = {
   sections: [{
@@ -85,6 +87,15 @@ var calcDistanceMiles = function(lat1, lon1, lat2, lon2){
 
 var buildMenu = function(lat, lon){
   var newItems = [];
+  
+  if(riderAlerts.length > 0){
+     newItems.push({
+      title: "Rider Alerts",
+      alertData: riderAlerts,
+      action:'alert'
+    }); 
+  }
+  
   for(var i = 0; i < stations.length; i ++){
     var distance = calcDistanceMiles(lat, lon, stations[i].lat, stations[i].lon);
     newItems.push({
@@ -92,6 +103,7 @@ var buildMenu = function(lat, lon){
       stationName: stations[i].name,
       stationValue: stations[i].apiKey,
       stationDistance: distance,
+      action:'station'
     }); 
   }
   
@@ -107,20 +119,25 @@ var buildMenu = function(lat, lon){
   menu.section(0,newSection);
 };
 
-function locationSuccess(pos) {
+var locationSuccess = function(pos) {
   buildMenu(pos.coords.latitude,pos.coords.longitude);
-}
+};
 
 menu.on('longSelect', function(){
   buildMenu(null,null);
 });
 
-function locationError(err) {
+var locationError = function(err) {
   console.log('location error (' + err.code + '): ' + err.message);
   buildMenu(null,null);
-}
+};
 
-navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locationOptions);
+var getLocation = function(rdrAlerts){
+  riderAlerts = rdrAlerts;
+  navigator.geolocation.getCurrentPosition(locationSuccess, locationError, locationOptions);
+};
+
+riderAlertService.getRiderAlertData(getLocation);
 
 module.exports = {
   menu: menu,
