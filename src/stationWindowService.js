@@ -2,6 +2,8 @@ var UI = require('ui');
 var Vector2 = require('vector2');
 
 var lastUpdatedText = null;
+var oldTrainData = null;
+var lastUpdatedDate = new Date();
 
 var stationWindow = new UI.Window({
   scrollable: true
@@ -18,6 +20,7 @@ var titleText = new UI.Text({
 stationWindow.add(titleText);
 
 var setTitle = function(title){
+  oldTrainData = null;
   titleText.text(title);
 };
 
@@ -54,6 +57,8 @@ var shortenString = function(str){
 };
 
 var renderData = function(trainData){
+  oldTrainData = trainData;
+  lastUpdatedDate =   new Date();
   clearDataElements();
   var rowPosition = 0;
   var rowSize = 25;
@@ -100,7 +105,7 @@ var renderData = function(trainData){
       size: new Vector2(141, 15),
       font: 'gothic-14',
       color: 'white',
-      text: 'Last Updated ' + (new Date()).toLocaleTimeString(),
+      text: 'Last Updated ' + lastUpdatedDate.toLocaleTimeString(),
       textAlign: 'right',
       textOverflow: 'ellipsis',
     });
@@ -108,6 +113,18 @@ var renderData = function(trainData){
 };
 
 var renderError = function(error, status){
+  if(oldTrainData){
+    var timeDiffMinutes = Math.trunc(((new Date()).getTime() - lastUpdatedDate.getTime()) / 60000);
+    if(timeDiffMinutes > 0){
+      for(var i = 0; i < oldTrainData.length; i ++){
+        if(!isNaN(oldTrainData[i].WAITING_TIME) && (oldTrainData[i].WAITING_TIME - timeDiffMinutes >= 0)){
+          oldTrainData[i].WAITING_TIME -= timeDiffMinutes;
+        }
+      }
+      renderData(oldTrainData);
+    }
+  }
+  
   if(lastUpdatedText && stationWindow.index(lastUpdatedText) > 1){
     lastUpdatedText.text('Refresh Failed');
   }
