@@ -42,7 +42,7 @@ var stations = [
   {name: "North Springs", abr: "N Springs", apiKey: "north%20springs", lat: 33.944552, lon: -84.356206 },
   {name: "Oakland City", abr: "Oakland", apiKey: "oakland%20city", lat: 33.716848, lon: -84.4252 },
   {name: "Peachtree Center", abr: "Peachtree Cntr", apiKey: "peachtree%20center", lat: 33.759677, lon: -84.387548 },
-  {name: "Sandy Springs", abr: "Sandy Sprngs", apiKey: "sandy%20springs", lat: 33.933035, lon: -84.352019 },
+  {name: "Sandy Springs", apiKey: "sandy%20springs", lat: 33.933035, lon: -84.352019 },
   {name: "Vine City", abr: "Vine Cty", apiKey: "vine%20city", lat: 33.75687, lon: -84.40391 },
   {name: "West End", apiKey: "west%20end", lat: 33.73581, lon: -84.41296 },
   {name: "West Lake", apiKey: "west%20lake", lat: 33.75314, lon: -84.44658 },
@@ -57,7 +57,7 @@ var menuOptions = {
   }]
 };
 
-if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform === 'basalt') { //Pebble Time
+if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform !== 'aplite') { //color pebbles
   menuOptions.backgroundColor = 'black';
   menuOptions.highlightBackgroundColor = 'orange';
   menuOptions.textColor = 'white';

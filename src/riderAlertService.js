@@ -5,7 +5,7 @@ var getRiderAlertData = function(callback){
   ajax(
     {
       url: 'http://developer.itsmarta.com/service_alerts.xml',
-      type: 'xml'
+      type: 'xml',
     },
     function(data, status, request) {
       var alerts = [];

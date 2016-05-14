@@ -9,8 +9,17 @@ var stationWindow = new UI.Window({
   scrollable: true
 });
 
+var infoOffset = 0;
+var titleOffset = 0;
+var yOffset = 0;
+if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform === 'chalk') { //round pebbles
+  infoOffset = 20;
+  titleOffset = 40;
+  yOffset = 10;
+}
+
 var titleText = new UI.Text({
-  position: new Vector2(5, 0),
+  position: new Vector2(5 + titleOffset, 0 + yOffset),
   size: new Vector2(134, 30),
   font: 'gothic-28-bold',
   color: 'white',
@@ -60,15 +69,15 @@ var renderData = function(trainData){
   oldTrainData = trainData;
   lastUpdatedDate =   new Date();
   clearDataElements();
-  var rowPosition = 0;
+  var rowPosition = yOffset;
   var rowSize = 25;
   for(var i = 0; i < trainData.length; i ++){
     
-    rowPosition = ((i + 1) * rowSize);
+    rowPosition = ((i + 1) * rowSize) + yOffset;
     var waitTime = trainData[i].WAITING_TIME + ((isNaN(trainData[i].WAITING_TIME)) ? '' : ' Min');
     
     var trainLineText = new UI.Text({
-      position: new Vector2(5, rowPosition),
+      position: new Vector2(5 + infoOffset, rowPosition),
       size: new Vector2(15, 25),
       font: 'gothic-24-bold',
       color: getColor(trainData[i].ROUTE.toLowerCase()),
@@ -78,7 +87,7 @@ var renderData = function(trainData){
     stationWindow.add(trainLineText);
     
     var headingText = new UI.Text({
-      position: new Vector2(20, rowPosition),
+      position: new Vector2(20 + infoOffset, rowPosition),
       size: new Vector2(80, 25),
       font: 'gothic-24',
       color: 'white',
@@ -89,7 +98,7 @@ var renderData = function(trainData){
     stationWindow.add(headingText);
     
       var waitingText = new UI.Text({
-      position: new Vector2(100, rowPosition),
+      position: new Vector2(100 + infoOffset, rowPosition),
       size: new Vector2(44, 25),
       font: 'gothic-24',
       color: 'white',
@@ -130,7 +139,7 @@ var renderError = function(error, status){
   }
   else if(!lastUpdatedText || stationWindow.index(lastUpdatedText) == -1){
       lastUpdatedText = new UI.Text({
-      position: new Vector2(5, 27),
+      position: new Vector2(5 + infoOffset, 27 + yOffset),
       size: new Vector2(134, 120),
       font: 'gothic-24',
       color: 'white',
