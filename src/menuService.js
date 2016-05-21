@@ -54,7 +54,10 @@ var menuOptions = {
   sections: [{
     title: 'Fetching Location...',
     items: [{title:' '}]
-  }]
+  }],
+  status: {
+    separator: 'none'
+  }
 };
 
 if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform !== 'aplite') { //color pebbles
@@ -62,6 +65,8 @@ if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform !== 'aplite
   menuOptions.highlightBackgroundColor = 'orange';
   menuOptions.textColor = 'white';
   menuOptions.highlightTextColor = 'white';
+  menuOptions.status.backgroundColor = 'black';
+  menuOptions.status.color = 'white';
 }
 
 var menu = new UI.Menu(menuOptions);

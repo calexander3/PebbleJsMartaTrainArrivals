@@ -6,7 +6,12 @@ var alertWindow = new UI.Card({
   bodyColor:"white",
   titleColor:"white",
   backgroundColor:"black",
-  scrollable: true
+  scrollable: true,
+  status: {
+    separator: 'none',
+    backgroundColor:"black",
+    color: 'white'
+  }
 });
 
 var renderAlerts = function(alertData){
