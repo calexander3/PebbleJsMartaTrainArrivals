@@ -1,5 +1,6 @@
 var UI = require('ui');
 var Vector2 = require('vector2');
+var Feature = require('platform/feature');
 
 var lastUpdatedText = null;
 var oldTrainData = null;
@@ -12,7 +13,7 @@ var stationWindow = new UI.Window({
 var infoOffset = 0;
 var titleOffset = 0;
 var yOffset = 0;
-if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform === 'chalk') { //round pebbles
+if(Feature.round()) {
   infoOffset = 20;
   titleOffset = 40;
   yOffset = 10;
@@ -46,6 +47,10 @@ var clearDataElements = function(){
 };
 
 var getColor = function(color){
+  if(Feature.blackAndWhite()){
+    return 'white';
+  }
+  
   switch(color) {
     case 'blue':
         return 'vividCerulean';

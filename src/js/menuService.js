@@ -1,5 +1,6 @@
 var UI = require('ui');
 var riderAlertService = require('riderAlertService');
+var Feature = require('platform/feature');
 
 var locationOptions = {
   enableHighAccuracy: true, 
@@ -60,7 +61,7 @@ var menuOptions = {
   }
 };
 
-if(Pebble.getActiveWatchInfo && Pebble.getActiveWatchInfo().platform !== 'aplite') { //color pebbles
+if(Feature.color()) {
   menuOptions.backgroundColor = 'black';
   menuOptions.highlightBackgroundColor = 'orange';
   menuOptions.textColor = 'white';
