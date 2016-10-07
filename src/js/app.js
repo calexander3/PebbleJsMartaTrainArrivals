@@ -2,7 +2,6 @@ var stationWindowService = require('stationWindowService');
 var alertWindowService = require('alertWindowService');
 var menuService = require('menuService');
 var martaService = require('martaService');
-//var backLight = require('ui/light');
 
 var currentStation = '';
 var runner = null;
@@ -16,9 +15,11 @@ menuService.menu.on('select', function(e) {
     stationWindowService.setTitle(e.item.stationName);
     currentStation = e.item.stationValue; 
     stationWindowService.stationWindow.show();
-    //backLight.on();
     refreshData();
     runner = setInterval(refreshData, 30000);
+  }
+  else if(e.item.action === 'allstations'){
+    menuService.buildMenu(null,null);
   }
   else if(e.item.action === 'alert'){
     alertWindowService.renderAlerts(e.item.alertData);
@@ -28,10 +29,8 @@ menuService.menu.on('select', function(e) {
 });
 
 stationWindowService.stationWindow.on('click', refreshData);
-//stationWindowService.stationWindow.on('accelTap', refreshData);
 
 stationWindowService.stationWindow.on('hide', function() {
-  //backLight.auto();
   if(runner){
     clearInterval(runner);
   }
